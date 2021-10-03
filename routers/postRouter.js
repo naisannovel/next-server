@@ -8,6 +8,6 @@ router.route('/')
 
 
 router.route('/photo/:id')
-    .get(authorize, getPhoto)
+    .get(getPhoto)
 
 module.exports = router;
