@@ -48,3 +48,10 @@ module.exports.getAllPost = async (req, res) =>{
     const allPost = await BlogModel.find({}).select({ image: 0, userId: 0 })
     res.status(200).send(allPost);
 }
+
+module.exports.getPostDetails = async (req,res) => {
+    const { id } = req.params;
+    const post = await BlogModel.findById(id).select({ image: 0, userId: 0});
+    console.log('post ', post);
+    res.status(200).send(post);
+}
