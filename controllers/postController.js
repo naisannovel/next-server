@@ -25,7 +25,7 @@ module.exports.createPost = (req,res)=>{
                         if(err) res.status(500).send('Internal server error!')
                         else return res.status(201).send({
                             message: 'successfully added your post',
-                            data: _.pick(result,["name","title","body"])
+                            data: _.pick(result,["_id","name","title","body"])
                         })
                     })
                 })
@@ -45,6 +45,6 @@ module.exports.getPhoto = async (req, res) => {
 }
 
 module.exports.getAllPost = async (req, res) =>{
-    const allPost = await BlogModel.find({}).select({ image: 0 })
+    const allPost = await BlogModel.find({}).select({ image: 0, userId: 0 })
     res.status(200).send(allPost);
 }
