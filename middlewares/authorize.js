@@ -15,12 +15,11 @@ module.exports = (req,res,next) =>{
     .auth()
     .verifyIdToken(token)
     .then((decodedToken) => {
-        const userData = _.pick(decodedToken, ["uid", "name", "email", "user_id"]);
+        const userData = _.pick(decodedToken, ["name", "email", "user_id"]);
         req.user = userData;
         next();
     })
     .catch((error) => {
         res.status(401).send('invalid token');
     });
-
 }
