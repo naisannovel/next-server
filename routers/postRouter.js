@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const authorize = require('../middlewares/authorize');
-const { createPost, getPhoto } = require('../controllers/postController');
+const { createPost, getPhoto, getAllPost } = require('../controllers/postController');
 
 router.route('/')
-    // .get(authorize)
+    .get(getAllPost)
     .post(authorize,createPost)
 
 

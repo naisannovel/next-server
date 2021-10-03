@@ -43,3 +43,8 @@ module.exports.getPhoto = async (req, res) => {
     res.set('Content-Type', post.image.contentType);
     return res.status(200).send(post.image.data);
 }
+
+module.exports.getAllPost = async (req, res) =>{
+    const allPost = await BlogModel.find({}).select({ image: 0 })
+    res.status(200).send(allPost);
+}
