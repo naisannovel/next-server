@@ -7,6 +7,7 @@ module.exports.createPost = (req,res)=>{
     let form = new formidable.IncomingForm();
         form.keepExtensions = true;
         form.parse(req,(err,fields,files)=>{
+
             if(err) return res.status(400).send('Something went wrong');
             const blogData = _.pick(fields,["title","body"]);
             blogData.name = req.user.name;
@@ -22,11 +23,23 @@ module.exports.createPost = (req,res)=>{
                     post.image.contentType = files.image.type;
                     post.save((err,result)=>{
                         if(err) res.status(500).send('Internal server error!')
-                        else return res.status(201).send('successfully added your post')
+                        else return res.status(201).send({
+                            message: 'successfully added your post',
+                            data: _.pick(result,["name","title","body"])
+                        })
                     })
                 })
             }else{
                 return res.status(400).send('No image provided');
             }
         })
+}
+
+
+module.exports.getPhoto = async (req, res) => {
+    const postId = req.params.id;
+    const post = await BlogModel.findById(postId)
+        .select({ image: 1, _id: 0 })
+    res.set('Content-Type', post.image.contentType);
+    return res.status(200).send(post.image.data);
 }
