@@ -29,6 +29,4 @@
     <li>Formidable For File Upload</li>
     <li>Lodash</li>
   </ul>
-<br>
-<a href="https://github.com/naisannovel/next-server" target='_blank'>Server Site Repository</a>
 
