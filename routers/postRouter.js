@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const authorize = require('../middlewares/authorize');
-const { createPost, getPhoto, getAllPost, getPostDetails, getMyPost, deletePost } = require('../controllers/postController');
+const { createPost, getPhoto, getAllPost, getPostDetails, getMyPost, deletePost, postUpdate } = require('../controllers/postController');
 
 router.route('/')
     .get(getAllPost)
@@ -14,6 +14,7 @@ router.route('/mine')
 router.route('/:id')
     .get(authorize, getPostDetails)
     .delete(authorize, deletePost)
+    .put(authorize, postUpdate)
 
 
 router.route('/photo/:id')

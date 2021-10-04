@@ -58,7 +58,6 @@ module.exports.getPostDetails = async (req,res) => {
 module.exports.getMyPost = async (req, res) => {
     const id = req.user.user_id;
     const posts = await BlogModel.find({ userId: id }).select({ image: 0 });
-    console.log(posts);
     res.status(200).send(posts);
 }
 
@@ -70,4 +69,12 @@ module.exports.deletePost = async (req, res) =>{
         message: 'successfully Deleted',
         id: result._id
     })
+}
+
+module.exports.postUpdate = async (req,res) =>{
+    const userId = req.user.user_id;
+    const postId = req.params.id;
+    const data = req.body;
+    const result = await BlogModel.findOneAndUpdate({ userId: userId, _id: postId },data,{ new: true }).select({ image: 0 })
+    if(result) return res.status(200).send('successfully updated');
 }
