@@ -52,6 +52,22 @@ module.exports.getAllPost = async (req, res) =>{
 module.exports.getPostDetails = async (req,res) => {
     const { id } = req.params;
     const post = await BlogModel.findById(id).select({ image: 0, userId: 0});
-    console.log('post ', post);
     res.status(200).send(post);
+}
+
+module.exports.getMyPost = async (req, res) => {
+    const id = req.user.user_id;
+    const posts = await BlogModel.find({ userId: id }).select({ image: 0 });
+    console.log(posts);
+    res.status(200).send(posts);
+}
+
+module.exports.deletePost = async (req, res) =>{
+    const userId = req.user.user_id;
+    const postId = req.params.id;
+    const result = await BlogModel.findOneAndDelete({ userId: userId, _id: postId }).select({ image: 0, _id: 1, title: 0, body: 0, userId: 0, name: 0 });
+    res.status(200).send({
+        message: 'successfully Deleted',
+        id: result._id
+    })
 }
